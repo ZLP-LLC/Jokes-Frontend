@@ -4,14 +4,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:zlp_jokes/core/auth/auth_token_exp.dart';
+import 'package:zlp_jokes/core/constants.dart';
 
 @injectable
 class HttpAPI {
   final AuthTokenExpirationController _authTokenExpirationController;
   final FlutterSecureStorage _flutterSecureStorage;
 
-  late final String _baseURLHost = 'https://jokes.zlp.ooo/api/v1';
-
+  late final String _baseURLHost = Constants.baseApiUrl;
   HttpAPI(
     this._authTokenExpirationController,
     this._flutterSecureStorage,

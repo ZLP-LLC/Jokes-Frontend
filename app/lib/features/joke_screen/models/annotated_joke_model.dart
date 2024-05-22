@@ -73,6 +73,8 @@ class AnnotatedJokeModel {
     return AnnotatedJokeModel(jokeParts: parts, id: json['id']);
   }
 
+  // fa
+
   @override
   String toString() {
     String result = '';

@@ -7,10 +7,10 @@ class JokeScreenCubit extends Cubit<AppState> {
   JokeScreenCubit() : super(AppStateDefault());
   final _repository = getIt<JokesRepository>();
 
-  void loadJoke(int jokeId) {
+  void loadJoke(int jokeId) async {
     try {
       emit(AppStateLoading());
-      final joke = _repository.getJokeById(jokeId);
+      final joke = await _repository.getJokeById(jokeId);
       emit(AppStateSuccess(joke));
     } catch (e) {
       emit(AppState.catchErrorHandler(e));

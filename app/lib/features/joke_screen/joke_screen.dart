@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zlp_jokes/core/app_state.dart';
+import 'package:zlp_jokes/features/grid_screen/data/models/joke_model.dart';
 import 'package:zlp_jokes/features/joke_screen/bloc/joke_screen_cubit.dart';
 import 'package:zlp_jokes/features/joke_screen/widgets/joke_card.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
@@ -11,35 +13,42 @@ class JokeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => JokeScreenCubit(),
-        child: Scaffold(
-          appBar: AppBar(
-              // title: const Text(
-              //   'Анекдоты',
-              //   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 28, color: AppColors.color200),
-              // ),
-              ),
-          body: Padding(
-            padding: EdgeInsets.only(top: 100),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Flexible(
-                  flex: 1,
-                  child: SizedBox.shrink(),
-                ),
-                Flexible(
-                  flex: 6,
-                  child: Column(
-                    children: [
-                      Text(jokeId.toString()),
-                      // JokeCard(joke: joke),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+      create: (context) => JokeScreenCubit()..loadJoke(jokeId),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Анекдот',
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 28, color: AppColors.color200),
           ),
-        ));
+        ),
+        body: Padding(
+          padding: const EdgeInsets.only(top: 80),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Flexible(
+                flex: 1,
+                child: SizedBox.shrink(),
+              ),
+              Flexible(
+                flex: 6,
+                child: Column(
+                  children: [
+                    BlocBuilder<JokeScreenCubit, AppState>(
+                      builder: (context, state) {
+                        if (state is AppStateSuccess<JokeModel>) {
+                          return JokeCard(jokeModel: state.data!);
+                        }
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

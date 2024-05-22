@@ -1,20 +1,22 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:zlp_jokes/core/constants.dart';
+import 'package:zlp_jokes/features/grid_screen/data/models/joke_model.dart';
 import 'package:zlp_jokes/features/joke_screen/models/annotated_joke_model.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
 
 class JokeCard extends StatefulWidget {
-  final Map<String, dynamic> joke;
-  final bool isJokePage;
-  const JokeCard({super.key, required this.joke, this.isJokePage = false});
+  final JokeModel jokeModel;
+
+  const JokeCard({super.key, required this.jokeModel});
 
   @override
   State<JokeCard> createState() => _JokeCardState();
 }
 
 class _JokeCardState extends State<JokeCard> {
-  List<TextSpan> textSpans = [];
+  // List<TextSpan> textSpans = [TextSpan()];
 
   final TextStyle annotationStyle = const TextStyle(
     color: Colors.black,
@@ -26,44 +28,39 @@ class _JokeCardState extends State<JokeCard> {
     fontSize: 20,
   );
 
-  late AnnotatedJokeModel jokeModel;
+  // latwidget.e JokeModel jokeModel;
 
   @override
   void initState() {
-    jokeModel = AnnotatedJokeModel.fromJson(widget.joke);
-    spansGenerator(jokeModel);
+    // spansGenerator(jokeModel);
     super.initState();
   }
 
-  void spansGenerator(AnnotatedJokeModel jokeModel) {
-    for (var element in jokeModel.jokeParts) {
-      if (!widget.isJokePage) {
-        textSpans.add(TextSpan(text: element.text, style: defaultStyle));
-      } else {
-        if (element.annotation == null) {
-          textSpans.add(TextSpan(text: element.text, style: defaultStyle));
-        } else {
-          textSpans.add(
-            TextSpan(
-              text: element.text,
-              style: annotationStyle,
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Dialog(
-                        child: Text(element.annotation!),
-                      );
-                    },
-                  );
-                },
-            ),
-          );
-        }
-      }
-    }
-  }
+  // void spansGenerator(AnnotatedJokeModel jokeModel) {
+
+  //       if (jokeModel.annotation == null) {
+  //         textSpans.add(TextSpan(text: element.text, style: defaultStyle));
+  //       } else {
+  //         textSpans.add(
+  //           TextSpan(
+  //             text: element.text,
+  //             style: annotationStyle,
+  //             recognizer: TapGestureRecognizer()
+  //               ..onTap = () {
+  //                 showDialog(
+  //                   context: context,
+  //                   builder: (context) {
+  //                     return Dialog(
+  //                       child: Text(element.annotation!),
+  //                     );
+  //                   },
+  //                 );
+  //               },
+  //           ),
+  //         );
+  //       }
+  //     }
+  //   }
 
   @override
   Widget build(BuildContext context) {
@@ -96,35 +93,32 @@ class _JokeCardState extends State<JokeCard> {
                       style: BorderStyle.solid,
                     ),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
                     child: Text(
-                      '1.00',
-                      style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+                      widget.jokeModel.rating.toStringAsFixed(2),
+                      style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
               ],
             ),
-            GestureDetector(
-              onTap: () {
-                if (!widget.isJokePage) Navigator.of(context).pushNamed('/joke/1');
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                child: SelectableText.rich(
-                  TextSpan(children: textSpans),
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
+              child: SelectableText.rich(
+                TextSpan(text: widget.jokeModel.text, style: defaultStyle),
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Clipboard.setData(ClipboardData(text: '${Constants.baseUrl}/joke/${widget.jokeModel.id}'));
+                  },
                   icon: const Icon(
                     Icons.share,
                     color: AppColors.color900,
@@ -133,7 +127,7 @@ class _JokeCardState extends State<JokeCard> {
                 ),
                 IconButton(
                   onPressed: () async {
-                    await Clipboard.setData(ClipboardData(text: jokeModel.plainText));
+                    await Clipboard.setData(ClipboardData(text: widget.jokeModel.text));
                   },
                   icon: const Icon(
                     Icons.copy,
