@@ -20,6 +20,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./app
+          context: .
           file: ./Dockerfile
           push: false
