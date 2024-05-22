@@ -61,6 +61,11 @@ class AuthUseCase {
     await _secureStorage.delete(key: 'token');
   }
 
+  Future<bool> isAuthorized() async {
+    final token = await _secureStorage.read(key: 'token');
+    return token != null;
+  }
+
   void dispose() {
     _expTokenSub?.cancel();
     _expTokenSub = null;
