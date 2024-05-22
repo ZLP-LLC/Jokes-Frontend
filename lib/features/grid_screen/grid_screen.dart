@@ -16,81 +16,79 @@ class GridScreen extends StatefulWidget {
 class _GridScreenState extends State<GridScreen> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 100),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              int crossAxisCount = constraints.maxWidth < 800 ? 1 : 2;
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Flexible(
-                    flex: 1,
-                    child: SizedBox.shrink(),
-                  ),
-                  Flexible(
-                    flex: 6,
-                    child: Column(
-                      children: [
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(right: 8, bottom: 4),
-                              child: Text(
-                                'Все анекдоты',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 28,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 100),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            int crossAxisCount = constraints.maxWidth < 800 ? 1 : 2;
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Flexible(
+                  flex: 1,
+                  child: SizedBox.shrink(),
+                ),
+                Flexible(
+                  flex: 6,
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(right: 8, bottom: 4),
+                            child: Text(
+                              'Все анекдоты',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 28,
                                 color: Colors.black,
-                                thickness: 2,
-                                height: 2,
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 36),
-                        BlocBuilder<GridScreenCubit, AppState>(
-                          builder: (context, state) {
-                            if (state is AppStateLoading) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else if (state is AppStateWrong) {
-                              if (state is AppStateError) {
-                                return Center(
-                                  child: Text(state.message),
-                                );
-                              }
-                            } else if (state is AppStateSuccess<List<JokeModel>>) {
-                              return StaggeredGrid.count(
-                                crossAxisCount: crossAxisCount,
-                                crossAxisSpacing: 36,
-                                mainAxisSpacing: 36,
-                                children: state.data!.map((joke) {
-                                  return SimpleJokeCard(jokeModel: joke);
-                                }).toList(),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              color: Colors.black,
+                              thickness: 2,
+                              height: 2,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 36),
+                      BlocBuilder<GridScreenCubit, AppState>(
+                        builder: (context, state) {
+                          if (state is AppStateLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (state is AppStateWrong) {
+                            if (state is AppStateError) {
+                              return Center(
+                                child: Text(state.message),
                               );
                             }
-                            return const SizedBox.shrink();
-                          },
-                        ),
-                      ],
-                    ),
+                          } else if (state is AppStateSuccess<List<JokeModel>>) {
+                            return StaggeredGrid.count(
+                              crossAxisCount: crossAxisCount,
+                              crossAxisSpacing: 36,
+                              mainAxisSpacing: 36,
+                              children: state.data!.map((joke) {
+                                return SimpleJokeCard(jokeModel: joke);
+                              }).toList(),
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              );
-            },
-          ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
