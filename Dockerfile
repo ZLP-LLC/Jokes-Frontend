@@ -24,16 +24,20 @@ RUN flutter channel stable; \
   flutter config --enable-web
 
 WORKDIR $APP
-COPY --chown=builder:builder ./pubspec.yaml ./pubspec.lock ./
+COPY --chown=builder:builder ./app/pubspec.yaml ./app/pubspec.lock ./
 RUN flutter clean; \
   flutter pub get;
-COPY --chown=builder:builder . $APP
-RUN flutter build web --release
+COPY --chown=builder:builder ./app $APP
+RUN flutter build web --release --wasm
 
-FROM nginx:1.25.2-alpine
+FROM nginx:stable-alpine
+ENV NGINX=/usr/share/nginx
 
-RUN rm -rf /usr/share/nginx/html
-COPY --from=builder /app/build/web /usr/share/nginx/html
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+# Установка приложения и передача владения файлами пользовалелю app
+COPY --from=builder /app/build/web $NGINX/html
+
+# Запуск
+EXPOSE 5000
 CMD ["nginx", "-g", "daemon off;"]
