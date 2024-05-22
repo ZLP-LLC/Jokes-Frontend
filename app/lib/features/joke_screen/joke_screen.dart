@@ -17,9 +17,9 @@ class JokeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           // automaticallyImplyLeading: false,
-          title: const Text(
-            'Анекдот',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 28, color: AppColors.color200),
+          title: Text(
+            'Анекдот №$jokeId',
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 28, color: AppColors.color200),
           ),
         ),
         body: SingleChildScrollView(
