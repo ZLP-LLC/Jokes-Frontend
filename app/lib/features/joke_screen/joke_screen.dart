@@ -16,36 +16,39 @@ class JokeScreen extends StatelessWidget {
       create: (context) => JokeScreenCubit()..loadJoke(jokeId),
       child: Scaffold(
         appBar: AppBar(
+          // automaticallyImplyLeading: false,
           title: const Text(
             'Анекдот',
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 28, color: AppColors.color200),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(top: 80),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Flexible(
-                flex: 1,
-                child: SizedBox.shrink(),
-              ),
-              Flexible(
-                flex: 6,
-                child: Column(
-                  children: [
-                    BlocBuilder<JokeScreenCubit, AppState>(
-                      builder: (context, state) {
-                        if (state is AppStateSuccess<JokeModel>) {
-                          return JokeCard(jokeModel: state.data!);
-                        }
-                        return const Center(child: CircularProgressIndicator());
-                      },
-                    ),
-                  ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 80, bottom: 40),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Flexible(
+                  flex: 1,
+                  child: SizedBox.shrink(),
                 ),
-              ),
-            ],
+                Flexible(
+                  flex: 5,
+                  child: Column(
+                    children: [
+                      BlocBuilder<JokeScreenCubit, AppState>(
+                        builder: (context, state) {
+                          if (state is AppStateSuccess<JokeModel>) {
+                            return JokeCard(jokeModel: state.data!);
+                          }
+                          return const Center(child: CircularProgressIndicator());
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

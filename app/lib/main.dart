@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:zlp_jokes/core/di/di.dart';
@@ -38,6 +39,8 @@ class MyApp extends StatelessWidget {
           color: AppColors.color900,
           elevation: 0,
           surfaceTintColor: Colors.transparent,
+          iconTheme: IconThemeData(color: Colors.white),
+          centerTitle: true,
         ),
         scaffoldBackgroundColor: Colors.white,
         shadowColor: const Color(0x00000000),
