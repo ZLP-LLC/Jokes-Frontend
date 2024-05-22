@@ -1,6 +1,6 @@
 {
-    "name": "zlp_jokes",
-    "short_name": "zlp_jokes",
+    "name": "jokes_frontend",
+    "short_name": "jokes_frontend",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

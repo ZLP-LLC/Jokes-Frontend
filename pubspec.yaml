@@ -18,7 +18,7 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   fluttertoast: ^8.2.4
-  get_it: ^7.7.0
+  get_it: ^7.6.8
   injectable: ^2.4.2
   intl: any
   logger: ^2.3.0
