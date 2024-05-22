@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zlp_jokes/features/account/account_screen.dart';
-import 'package:zlp_jokes/features/grid_screen/bloc/grid_screen_cubit.dart';
-import 'package:zlp_jokes/features/grid_screen/grid_screen.dart';
+import 'package:zlp_jokes/features/home/grid_screen/bloc/grid_screen_cubit.dart';
+import 'package:zlp_jokes/features/home/grid_screen/grid_screen.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
