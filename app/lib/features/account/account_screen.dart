@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zlp_jokes/features/account/cubit/account_cubit.dart';
 import 'package:zlp_jokes/features/account/cubit/account_screen_states.dart';
 import 'package:zlp_jokes/features/account/widgets/login_widget.dart';
@@ -23,15 +23,15 @@ class _AccountScreenState extends State<AccountScreen> {
       child: BlocConsumer<AccountScreenCubit, AppState>(
         listener: (context, state) {
           if (state is AppStateError) {
-            Fluttertoast.showToast(
-              msg: state.message,
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.black,
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
+            // Fluttertoast.showToast(
+            //   msg: state.message,
+            //   toastLength: Toast.LENGTH_SHORT,
+            //   gravity: ToastGravity.CENTER,
+            //   timeInSecForIosWeb: 1,
+            //   backgroundColor: Colors.black,
+            //   textColor: Colors.white,
+            //   fontSize: 16.0,
+            // );
           }
         },
         builder: (context, state) {
