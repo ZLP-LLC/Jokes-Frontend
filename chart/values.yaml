@@ -1,0 +1,5 @@
+app:
+  imageName: ghcr.io/zlp-llc/jokes-frontend:dev
+  port: 80
+  nodePort:
+  replicas: 1
