@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zlp_jokes/core/app_state.dart';
 import 'package:zlp_jokes/core/di/di.dart';
-import 'package:zlp_jokes/features/grid_screen/data/repository/jokes_repository.dart';
+import 'package:zlp_jokes/features/home/grid_screen/data/repository/jokes_repository.dart';
+import 'package:zlp_jokes/utils/app_state.dart';
 
 class JokeScreenCubit extends Cubit<AppState> {
   JokeScreenCubit() : super(AppStateDefault());

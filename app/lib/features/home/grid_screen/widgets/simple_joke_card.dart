@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zlp_jokes/core/constants.dart';
-import 'package:zlp_jokes/features/grid_screen/data/models/joke_model.dart';
+import 'package:zlp_jokes/features/home/grid_screen/data/models/joke_model.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
 
 class SimpleJokeCard extends StatelessWidget {

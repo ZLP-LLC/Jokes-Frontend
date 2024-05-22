@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zlp_jokes/core/app_state.dart';
-import 'package:zlp_jokes/features/grid_screen/data/models/joke_model.dart';
+import 'package:zlp_jokes/features/home/grid_screen/data/models/joke_model.dart';
 import 'package:zlp_jokes/features/joke_screen/bloc/joke_screen_cubit.dart';
 import 'package:zlp_jokes/features/joke_screen/widgets/joke_card.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
+import 'package:zlp_jokes/utils/app_state.dart';
 
 class JokeScreen extends StatelessWidget {
   final int jokeId;

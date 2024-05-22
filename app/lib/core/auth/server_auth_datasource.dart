@@ -1,8 +1,8 @@
-import 'package:zlp_jokes/core/app_state.dart';
 import 'package:zlp_jokes/core/auth/auth_constants.dart';
 import 'package:zlp_jokes/core/auth/models/login_request.dart';
 import 'package:zlp_jokes/core/auth/models/register_request.dart';
 import 'package:zlp_jokes/core/services/network_service.dart';
+import 'package:zlp_jokes/utils/app_state.dart';
 
 class ServerAuthDataSource {
   final NetworkService _networkService;
