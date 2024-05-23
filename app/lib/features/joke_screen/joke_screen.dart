@@ -16,7 +16,6 @@ class JokeScreen extends StatelessWidget {
       create: (context) => JokeScreenCubit()..loadJoke(jokeId),
       child: Scaffold(
         appBar: AppBar(
-          // automaticallyImplyLeading: false,
           title: Text(
             'Анекдот №$jokeId',
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 28, color: AppColors.color200),

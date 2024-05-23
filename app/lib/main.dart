@@ -44,6 +44,21 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.white,
         shadowColor: const Color(0x00000000),
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.color900,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors.color900,
+            ),
+          ),
+          focusColor: AppColors.color900,
+          floatingLabelStyle: TextStyle(color: AppColors.color900),
+        ),
       ),
     );
   }
