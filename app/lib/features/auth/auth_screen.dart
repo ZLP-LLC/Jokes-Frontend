@@ -16,7 +16,7 @@ class _AuthScreenState extends State<AuthScreen> {
   bool _obscureText = true;
   late TextEditingController _passwordController;
   late TextEditingController _loginController;
-  late Function()? onPop;
+  late Function() onPop;
   @override
   void initState() {
     super.initState();
@@ -34,7 +34,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    onPop = ModalRoute.of(context)?.settings.arguments as Function(); // TODO гига костыль переделать на voidcallback
+    onPop = ModalRoute.of(context)?.settings.arguments
+        as Function(); // TODO гига костыль переделать на voidcallback или колить в блоке
     return BlocProvider(
       create: (context) => AuthCubit(),
       child: Scaffold(
@@ -122,7 +123,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
                                           if (success) {
                                             if (mounted) {
-                                              onPop!.call();
+                                              onPop.call();
                                               Navigator.of(context).pop();
                                             }
                                           }

@@ -24,7 +24,7 @@ class AuthUseCase {
         _authTokenExpirationController = authTokenExpirationController;
 
   void init() {
-    _expTokenSub ??= _authTokenExpirationController.expirationTokenStream.listen((_) => _logout());
+    _expTokenSub ??= _authTokenExpirationController.expirationTokenStream.listen((_) => logout());
   }
 
   Future<void> signIn({
@@ -57,7 +57,7 @@ class AuthUseCase {
     );
   }
 
-  Future<void> _logout() async {
+  Future<void> logout() async {
     await _secureStorage.delete(key: 'token');
   }
 

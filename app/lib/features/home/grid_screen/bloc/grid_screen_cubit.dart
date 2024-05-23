@@ -12,7 +12,7 @@ class GridScreenCubit extends Cubit<AppState> {
   bool isAuthorized = false;
 
   void init() async {
-    isAuthorized = await _authUseCase.isAuthorized();
+    isAuthorized = !await _authUseCase.isAuthorized();
 
     loadJokes();
   }
