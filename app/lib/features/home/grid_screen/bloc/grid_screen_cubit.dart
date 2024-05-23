@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zlp_jokes/core/auth/auth_usecase.dart';
 import 'package:zlp_jokes/core/di/di.dart';
-import 'package:zlp_jokes/features/home/grid_screen/data/models/joke_model.dart';
 import 'package:zlp_jokes/features/home/grid_screen/data/repository/jokes_repository.dart';
 import 'package:zlp_jokes/utils/app_state.dart';
 
@@ -21,8 +20,8 @@ class GridScreenCubit extends Cubit<AppState> {
   Future<void> loadJokes() async {
     try {
       emit(AppStateLoading());
-      final List<JokeModel> jokes = await _repository.getJokes();
-      emit(AppStateSuccess(jokes.reversed));
+      final jokes = await _repository.getJokes();
+      emit(AppStateSuccess(jokes.reversed.toList()));
     } catch (e) {
       emit(AppState.catchErrorHandler(e));
     }
