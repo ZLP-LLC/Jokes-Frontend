@@ -123,6 +123,12 @@ class _JokeCardState extends State<JokeCard> {
                         await Clipboard.setData(
                           ClipboardData(text: '${Constants.baseUrl}/joke/${widget.jokeModel.id}'),
                         );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            duration: Duration(seconds: 1),
+                            content: Text('Ссылка скопирована'),
+                          ),
+                        );
                       },
                       icon: const Icon(
                         Icons.share,
@@ -133,6 +139,12 @@ class _JokeCardState extends State<JokeCard> {
                     IconButton(
                       onPressed: () async {
                         await Clipboard.setData(ClipboardData(text: widget.jokeModel.text));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            duration: Duration(seconds: 1),
+                            content: Text('Текст скопирован'),
+                          ),
+                        );
                       },
                       icon: const Icon(
                         Icons.copy,

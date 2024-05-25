@@ -72,6 +72,12 @@ class SimpleJokeCard extends StatelessWidget {
                 IconButton(
                   onPressed: () async {
                     await Clipboard.setData(ClipboardData(text: '${Constants.baseUrl}/joke/${jokeModel.id}'));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        duration: Duration(seconds: 1),
+                        content: Text('Ссылка скопирована'),
+                      ),
+                    );
                   },
                   icon: const Icon(
                     Icons.share,
@@ -82,6 +88,12 @@ class SimpleJokeCard extends StatelessWidget {
                 IconButton(
                   onPressed: () async {
                     await Clipboard.setData(ClipboardData(text: jokeModel.text));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        duration: Duration(seconds: 1),
+                        content: Text('Текст скопирован'),
+                      ),
+                    );
                   },
                   icon: const Icon(
                     Icons.copy,
