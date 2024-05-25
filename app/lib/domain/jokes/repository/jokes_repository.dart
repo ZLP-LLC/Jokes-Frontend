@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 import 'package:zlp_jokes/core/services/network_service.dart';
-import 'package:zlp_jokes/features/home/grid_screen/data/models/joke_model.dart';
+import 'package:zlp_jokes/domain/jokes/models/joke_model.dart';
 
 @injectable
 class JokesRepository {

@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:zlp_jokes/core/auth/auth_token_exp.dart';
-import 'package:zlp_jokes/core/auth/models/login_request.dart';
-import 'package:zlp_jokes/core/auth/models/register_request.dart';
-import 'package:zlp_jokes/core/auth/server_auth_datasource.dart';
+import 'package:zlp_jokes/domain/auth/models/login_request.dart';
+import 'package:zlp_jokes/domain/auth/models/register_request.dart';
+import 'package:zlp_jokes/domain/auth/repository/server_auth_datasource.dart';
 
 @injectable
 class AuthUseCase {
