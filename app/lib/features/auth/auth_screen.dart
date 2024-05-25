@@ -113,6 +113,14 @@ class _AuthScreenState extends State<AuthScreen> {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 16),
                                   child: OutlinedButton(
+                                    style: ButtonStyle(
+                                      side: MaterialStateProperty.all(
+                                        const BorderSide(
+                                          color: AppColors.color400,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                    ),
                                     onPressed: () async {
                                       final login = _loginController.text;
                                       final password = _passwordController.text;
@@ -121,11 +129,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                           final success =
                                               await context.read<AuthCubit>().tryAuth(login: login, password: password);
 
-                                          if (success) {
-                                            if (mounted) {
-                                              onPop.call();
-                                              Navigator.of(context).pop();
-                                            }
+                                          if (success && mounted) {
+                                            onPop.call();
+                                            Navigator.of(context).pop();
                                           }
                                         } else {
                                           ScaffoldMessenger.of(context).showSnackBar(
@@ -144,7 +150,14 @@ class _AuthScreenState extends State<AuthScreen> {
                                         );
                                       }
                                     },
-                                    child: const Text('Войти'),
+                                    child: const Text(
+                                      'Войти',
+                                      style: TextStyle(
+                                        color: AppColors.color800,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(height: 16),
