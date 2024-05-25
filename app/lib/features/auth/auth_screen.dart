@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zlp_jokes/features/auth/bloc/auth_cubit.dart';
+import 'package:zlp_jokes/features/home/bloc/home_screen_cubit.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
 import 'package:zlp_jokes/utils/app_state.dart';
 
@@ -16,7 +16,7 @@ class _AuthScreenState extends State<AuthScreen> {
   bool _obscureText = true;
   late TextEditingController _passwordController;
   late TextEditingController _loginController;
-  late Function() onPop;
+
   @override
   void initState() {
     super.initState();
@@ -34,10 +34,11 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    onPop = ModalRoute.of(context)?.settings.arguments
-        as Function(); // TODO гига костыль переделать на voidcallback или колить в блоке
-    return BlocProvider(
-      create: (context) => AuthCubit(),
+    return WillPopScope(
+      onWillPop: () async {
+        context.read<HomeScreenCubit>().loadJokes();
+        return true;
+      },
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -130,7 +131,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                               await context.read<AuthCubit>().tryAuth(login: login, password: password);
 
                                           if (success && mounted) {
-                                            onPop.call();
+                                            context.read<HomeScreenCubit>().loadJokes();
                                             Navigator.of(context).pop();
                                           }
                                         } else {

@@ -1,11 +1,10 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zlp_jokes/core/constants.dart';
 import 'package:zlp_jokes/domain/jokes/models/joke_model.dart';
 import 'package:zlp_jokes/domain/jokes/models/annotated_joke_model.dart';
-import 'package:zlp_jokes/features/joke_screen/bloc/joke_screen_cubit.dart';
+import 'package:zlp_jokes/features/auth/bloc/auth_cubit.dart';
 import 'package:zlp_jokes/features/joke_screen/widgets/rating_widget.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
 
@@ -30,13 +29,18 @@ class _JokeCardState extends State<JokeCard> {
     color: Colors.black,
     fontSize: 20,
   );
-
+  late bool _isAuthorized;
   // latwidget.e JokeModel jokeModel;
 
   @override
   void initState() {
     // spansGenerator(jokeModel);
     super.initState();
+    context.read<AuthCubit>().isAuthorized().then((value) {
+      setState(() {
+        _isAuthorized = value;
+      });
+    });
   }
 
   // void spansGenerator(AnnotatedJokeModel jokeModel) {
@@ -124,7 +128,8 @@ class _JokeCardState extends State<JokeCard> {
                     IconButton(
                       onPressed: () async {
                         await Clipboard.setData(
-                            ClipboardData(text: '${Constants.baseUrl}/joke/${widget.jokeModel.id}'));
+                          ClipboardData(text: '${Constants.baseUrl}/joke/${widget.jokeModel.id}'),
+                        );
                       },
                       icon: const Icon(
                         Icons.share,
@@ -148,7 +153,7 @@ class _JokeCardState extends State<JokeCard> {
             ),
           ),
         ),
-        if (!context.read<JokeScreenCubit>().isAuthorized) ...[
+        if (_isAuthorized) ...[
           const SizedBox(
             height: 20,
           ),

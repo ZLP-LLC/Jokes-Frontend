@@ -23,4 +23,14 @@ class AuthCubit extends Cubit<AppState> {
     }
     return false;
   }
+
+  Future<bool> isAuthorized() async {
+    try {
+      final status = _authUseCase.isAuthorized();
+      return status;
+    } catch (e) {
+      emit(AppState.catchErrorHandler(e));
+      return false;
+    }
+  }
 }

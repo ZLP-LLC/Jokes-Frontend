@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zlp_jokes/features/account/cubit/account_cubit.dart';
+import 'package:zlp_jokes/features/home/bloc/home_screen_cubit.dart';
+import 'package:zlp_jokes/features/home/home_screen.dart';
 
 import 'package:zlp_jokes/utils/app_state.dart';
 
@@ -12,10 +14,8 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  late Function() onPop;
   @override
   Widget build(BuildContext context) {
-    onPop = ModalRoute.of(context)?.settings.arguments as Function();
     return BlocProvider(
       create: (context) => AccountScreenCubit()..init(),
       child: Scaffold(
@@ -37,7 +37,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 onPressed: () async {
                   final success = await context.read<AccountScreenCubit>().logout();
                   if (success && mounted) {
-                    onPop.call();
+                    context.read<HomeScreenCubit>().loadJokes();
                     Navigator.pop(context);
                   }
                 },
