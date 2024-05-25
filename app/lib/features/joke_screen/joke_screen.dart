@@ -13,7 +13,7 @@ class JokeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => JokeScreenCubit()..loadJoke(jokeId),
+      create: (context) => JokeScreenCubit(jokeId: jokeId)..init(),
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -23,7 +23,7 @@ class JokeScreen extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top: 80, bottom: 40),
+            padding: const EdgeInsets.only(top: 40, bottom: 40),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -18,7 +18,7 @@ class _GridScreenState extends State<GridScreen> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.only(top: 80, bottom: 40),
+        padding: const EdgeInsets.only(top: 60, bottom: 40),
         child: LayoutBuilder(
           builder: (context, constraints) {
             int crossAxisCount = constraints.maxWidth < 800 ? 1 : 2;
