@@ -123,8 +123,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ),
                                     ),
                                     onPressed: () async {
-                                      final login = _loginController.text;
-                                      final password = _passwordController.text;
+                                      final login = _loginController.text.trim();
+                                      final password = _passwordController.text.trim();
                                       if (login.isNotEmpty && password.isNotEmpty) {
                                         if (password.length >= 8) {
                                           final success =
