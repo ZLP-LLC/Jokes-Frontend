@@ -14,35 +14,40 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AccountScreenCubit()..init(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Аккаунт',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 28, color: Colors.white),
+    return PopScope(
+      onPopInvoked: (bool value) {
+        context.read<HomeScreenCubit>().loadJokes();
+      },
+      child: BlocProvider(
+        create: (context) => AccountScreenCubit()..init(),
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'Аккаунт',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 28, color: Colors.white),
+            ),
           ),
-        ),
-        body: BlocBuilder<AccountScreenCubit, AppState>(
-          builder: (context, state) {
-            if (state is AppStateLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
+          body: BlocBuilder<AccountScreenCubit, AppState>(
+            builder: (context, state) {
+              if (state is AppStateLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return Center(
+                child: OutlinedButton(
+                  onPressed: () async {
+                    final success = await context.read<AccountScreenCubit>().logout();
+                    if (success && mounted) {
+                      context.read<HomeScreenCubit>().loadJokes();
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('Выйти'),
+                ),
               );
-            }
-            return Center(
-              child: OutlinedButton(
-                onPressed: () async {
-                  final success = await context.read<AccountScreenCubit>().logout();
-                  if (success && mounted) {
-                    context.read<HomeScreenCubit>().loadJokes();
-                    Navigator.pop(context);
-                  }
-                },
-                child: const Text('Выйти'),
-              ),
-            );
-          },
+            },
+          ),
         ),
       ),
     );
