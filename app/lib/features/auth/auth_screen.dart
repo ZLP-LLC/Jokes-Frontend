@@ -39,6 +39,7 @@ class _AuthScreenState extends State<AuthScreen> {
         context.read<HomeScreenCubit>().loadJokes();
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text(
             'Авторизация',
@@ -62,7 +63,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     flex: 6,
                     child: Container(
                       width: 480,
-                      height: 300,
+                      height: 280,
                       decoration: BoxDecoration(
                         color: AppColors.color200,
                         borderRadius: BorderRadius.circular(25),
@@ -73,9 +74,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                        padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Column(
@@ -107,61 +108,67 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ),
                               ],
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                                  child: OutlinedButton(
-                                    style: ButtonStyle(
-                                      side: WidgetStateProperty.all(
-                                        const BorderSide(
-                                          color: AppColors.color400,
-                                          width: 2.0,
+                            // const SizedBox(height: 40),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                    ),
+                                    child: OutlinedButton(
+                                      style: ButtonStyle(
+                                        side: WidgetStateProperty.all(
+                                          const BorderSide(
+                                            color: AppColors.color400,
+                                            width: 2.0,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    onPressed: () async {
-                                      final login = _loginController.text.trim();
-                                      final password = _passwordController.text.trim();
-                                      if (login.isNotEmpty && password.isNotEmpty) {
-                                        if (password.length >= 8) {
-                                          final success =
-                                              await context.read<AuthCubit>().tryAuth(login: login, password: password);
+                                      onPressed: () async {
+                                        final login = _loginController.text.trim();
+                                        final password = _passwordController.text.trim();
+                                        if (login.isNotEmpty && password.isNotEmpty) {
+                                          if (password.length >= 8) {
+                                            final success = await context
+                                                .read<AuthCubit>()
+                                                .tryAuth(login: login, password: password);
 
-                                          if (success && mounted) {
-                                            context.read<HomeScreenCubit>().loadJokes();
-                                            Navigator.of(context).pop();
+                                            if (success && mounted) {
+                                              context.read<HomeScreenCubit>().loadJokes();
+                                              Navigator.of(context).pop();
+                                            }
+                                          } else {
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(
+                                                duration: Duration(seconds: 2),
+                                                content: Text('Пароль должен быть не менее 8 символов'),
+                                              ),
+                                            );
                                           }
                                         } else {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                             const SnackBar(
                                               duration: Duration(seconds: 2),
-                                              content: Text('Пароль должен быть не менее 8 символов'),
+                                              content: Text('Заполните все поля'),
                                             ),
                                           );
                                         }
-                                      } else {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(
-                                            duration: Duration(seconds: 2),
-                                            content: Text('Заполните все поля'),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Войти',
-                                      style: TextStyle(
-                                        color: AppColors.color800,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500,
+                                      },
+                                      child: const Text(
+                                        'Войти',
+                                        style: TextStyle(
+                                          color: AppColors.color800,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 16),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
