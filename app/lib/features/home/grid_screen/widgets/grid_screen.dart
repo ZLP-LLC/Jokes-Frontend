@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:zlp_jokes/features/home/bloc/grid_screen_cubit.dart';
+import 'package:zlp_jokes/features/home/bloc/home_screen_cubit.dart';
 import 'package:zlp_jokes/domain/jokes/models/joke_model.dart';
 import 'package:zlp_jokes/features/home/grid_screen/widgets/simple_joke_card.dart';
 import 'package:zlp_jokes/utils/app_state.dart';

@@ -1,13 +1,13 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zlp_jokes/core/constants.dart';
 import 'package:zlp_jokes/domain/jokes/models/joke_model.dart';
-import 'package:zlp_jokes/domain/jokes/models/annotated_joke_model.dart';
-import 'package:zlp_jokes/features/joke_screen/bloc/joke_screen_cubit.dart';
+// import 'package:zlp_jokes/domain/jokes/models/annotated_joke_model.dart';
+import 'package:zlp_jokes/features/auth/bloc/auth_cubit.dart';
 import 'package:zlp_jokes/features/joke_screen/widgets/rating_widget.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
+import 'package:zlp_jokes/utils/text_styles.dart';
 
 class JokeCard extends StatefulWidget {
   final JokeModel jokeModel;
@@ -21,22 +21,19 @@ class JokeCard extends StatefulWidget {
 class _JokeCardState extends State<JokeCard> {
   // List<TextSpan> textSpans = [TextSpan()];
 
-  final TextStyle annotationStyle = const TextStyle(
-    color: Colors.black,
-    fontSize: 20,
-    backgroundColor: Color(0x261E1F24),
-  );
-  final TextStyle defaultStyle = const TextStyle(
-    color: Colors.black,
-    fontSize: 20,
-  );
-
+  late bool _isAuthorized;
   // latwidget.e JokeModel jokeModel;
 
   @override
   void initState() {
     // spansGenerator(jokeModel);
     super.initState();
+    _isAuthorized = false;
+    context.read<AuthCubit>().isAuthorized().then((value) {
+      setState(() {
+        _isAuthorized = value;
+      });
+    });
   }
 
   // void spansGenerator(AnnotatedJokeModel jokeModel) {
@@ -115,7 +112,7 @@ class _JokeCardState extends State<JokeCard> {
                     vertical: 8,
                   ),
                   child: SelectableText.rich(
-                    TextSpan(text: widget.jokeModel.text, style: defaultStyle),
+                    TextSpan(text: widget.jokeModel.text, style: TextStyles.defaultJokeStyle),
                   ),
                 ),
                 Row(
@@ -124,7 +121,14 @@ class _JokeCardState extends State<JokeCard> {
                     IconButton(
                       onPressed: () async {
                         await Clipboard.setData(
-                            ClipboardData(text: '${Constants.baseUrl}/joke/${widget.jokeModel.id}'));
+                          ClipboardData(text: '${Constants.baseUrl}/joke/${widget.jokeModel.id}'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            duration: Duration(seconds: 1),
+                            content: Text('Ссылка скопирована'),
+                          ),
+                        );
                       },
                       icon: const Icon(
                         Icons.share,
@@ -135,6 +139,12 @@ class _JokeCardState extends State<JokeCard> {
                     IconButton(
                       onPressed: () async {
                         await Clipboard.setData(ClipboardData(text: widget.jokeModel.text));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            duration: Duration(seconds: 1),
+                            content: Text('Текст скопирован'),
+                          ),
+                        );
                       },
                       icon: const Icon(
                         Icons.copy,
@@ -148,7 +158,7 @@ class _JokeCardState extends State<JokeCard> {
             ),
           ),
         ),
-        if (!context.read<JokeScreenCubit>().isAuthorized) ...[
+        if (_isAuthorized) ...[
           const SizedBox(
             height: 20,
           ),

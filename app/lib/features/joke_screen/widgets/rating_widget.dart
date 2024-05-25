@@ -68,7 +68,7 @@ class _RatingWidgetState extends State<RatingWidget> {
                 height: 44,
                 child: OutlinedButton(
                   style: ButtonStyle(
-                    side: MaterialStateProperty.all(
+                    side: WidgetStateProperty.all(
                       const BorderSide(
                         color: AppColors.color400,
                         width: 3.0,
