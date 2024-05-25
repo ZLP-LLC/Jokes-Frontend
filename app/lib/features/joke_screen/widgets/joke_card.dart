@@ -7,6 +7,7 @@ import 'package:zlp_jokes/domain/jokes/models/annotated_joke_model.dart';
 import 'package:zlp_jokes/features/auth/bloc/auth_cubit.dart';
 import 'package:zlp_jokes/features/joke_screen/widgets/rating_widget.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
+import 'package:zlp_jokes/utils/text_styles.dart';
 
 class JokeCard extends StatefulWidget {
   final JokeModel jokeModel;
@@ -20,15 +21,6 @@ class JokeCard extends StatefulWidget {
 class _JokeCardState extends State<JokeCard> {
   // List<TextSpan> textSpans = [TextSpan()];
 
-  final TextStyle annotationStyle = const TextStyle(
-    color: Colors.black,
-    fontSize: 20,
-    backgroundColor: Color(0x261E1F24),
-  );
-  final TextStyle defaultStyle = const TextStyle(
-    color: Colors.black,
-    fontSize: 20,
-  );
   late bool _isAuthorized;
   // latwidget.e JokeModel jokeModel;
 
@@ -120,7 +112,7 @@ class _JokeCardState extends State<JokeCard> {
                     vertical: 8,
                   ),
                   child: SelectableText.rich(
-                    TextSpan(text: widget.jokeModel.text, style: defaultStyle),
+                    TextSpan(text: widget.jokeModel.text, style: TextStyles.defaultJokeStyle),
                   ),
                 ),
                 Row(

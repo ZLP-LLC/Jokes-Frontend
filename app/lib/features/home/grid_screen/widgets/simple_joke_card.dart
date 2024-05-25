@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:zlp_jokes/core/constants.dart';
 import 'package:zlp_jokes/domain/jokes/models/joke_model.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
+import 'package:zlp_jokes/utils/text_styles.dart';
 
 class SimpleJokeCard extends StatelessWidget {
   final JokeModel jokeModel;
@@ -61,10 +62,7 @@ class SimpleJokeCard extends StatelessWidget {
                 ),
                 child: Text(
                   jokeModel.text,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                  ),
+                  style: TextStyles.defaultJokeStyle,
                 ),
               ),
             ),
