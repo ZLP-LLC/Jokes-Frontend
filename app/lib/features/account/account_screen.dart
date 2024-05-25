@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zlp_jokes/features/account/cubit/account_cubit.dart';
 import 'package:zlp_jokes/features/home/bloc/home_screen_cubit.dart';
-import 'package:zlp_jokes/features/home/home_screen.dart';
-
 import 'package:zlp_jokes/utils/app_state.dart';
 
 class AccountScreen extends StatefulWidget {

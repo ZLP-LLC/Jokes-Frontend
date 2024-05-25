@@ -36,6 +36,7 @@ class _JokeCardState extends State<JokeCard> {
   void initState() {
     // spansGenerator(jokeModel);
     super.initState();
+    _isAuthorized = false;
     context.read<AuthCubit>().isAuthorized().then((value) {
       setState(() {
         _isAuthorized = value;
