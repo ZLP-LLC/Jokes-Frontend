@@ -23,10 +23,9 @@ class _JokeScreenState extends State<JokeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (bool value) {
         context.read<HomeScreenCubit>().loadJokes();
-        return true;
       },
       child: BlocProvider(
         create: (context) => JokeScreenCubit(jokeId: widget.jokeId),

@@ -7,8 +7,9 @@ linter:
 
 analyzer:
   errors:
-    deprecated_member_use: false
+    deprecated_member_use: true
     deprecated_member_use_from_same_package: false
+    use_build_context_synchronously: ignore
 
   exclude: [
     lib/**.g.dart

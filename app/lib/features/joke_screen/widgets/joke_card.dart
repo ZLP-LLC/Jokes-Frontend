@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zlp_jokes/core/constants.dart';
 import 'package:zlp_jokes/domain/jokes/models/joke_model.dart';
-import 'package:zlp_jokes/domain/jokes/models/annotated_joke_model.dart';
+// import 'package:zlp_jokes/domain/jokes/models/annotated_joke_model.dart';
 import 'package:zlp_jokes/features/auth/bloc/auth_cubit.dart';
 import 'package:zlp_jokes/features/joke_screen/widgets/rating_widget.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';

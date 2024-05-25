@@ -34,10 +34,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (bool value) {
         context.read<HomeScreenCubit>().loadJokes();
-        return true;
       },
       child: Scaffold(
         appBar: AppBar(
@@ -115,7 +114,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   padding: const EdgeInsets.symmetric(horizontal: 16),
                                   child: OutlinedButton(
                                     style: ButtonStyle(
-                                      side: MaterialStateProperty.all(
+                                      side: WidgetStateProperty.all(
                                         const BorderSide(
                                           color: AppColors.color400,
                                           width: 2.0,
