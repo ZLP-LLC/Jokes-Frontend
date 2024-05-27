@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,31 +37,38 @@ class _JokeCardState extends State<JokeCard> {
     });
   }
 
-  // void spansGenerator(AnnotatedJokeModel jokeModel) {
-
-  //       if (jokeModel.annotation == null) {
-  //         textSpans.add(TextSpan(text: element.text, style: defaultStyle));
-  //       } else {
-  //         textSpans.add(
-  //           TextSpan(
-  //             text: element.text,
-  //             style: annotationStyle,
-  //             recognizer: TapGestureRecognizer()
-  //               ..onTap = () {
-  //                 showDialog(
-  //                   context: context,
-  //                   builder: (context) {
-  //                     return Dialog(
-  //                       child: Text(element.annotation!),
-  //                     );
-  //                   },
-  //                 );
-  //               },
-  //           ),
-  //         );
-  //       }
-  //     }
-  //   }
+  List<TextSpan> spansGenerator(AnnotatedJokeModel model) {
+    List<TextSpan> textSpans = [];
+    for (var element in model.jokeParts) {
+      if (element.annotation == null) {
+        textSpans.add(
+          TextSpan(
+            text: element.text,
+            style: TextStyles.defaultJokeStyle,
+          ),
+        );
+      } else {
+        textSpans.add(
+          TextSpan(
+            text: element.text,
+            style: TextStyles.annotationStyle,
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Dialog(
+                      child: Text(element.annotation!),
+                    );
+                  },
+                );
+              },
+          ),
+        );
+      }
+    }
+    return textSpans;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +120,8 @@ class _JokeCardState extends State<JokeCard> {
                     vertical: 8,
                   ),
                   child: SelectableText.rich(
-                    TextSpan(text: widget.annotatedJokeModel.plainText, style: TextStyles.defaultJokeStyle),
+                    TextSpan(children: [...spansGenerator(widget.annotatedJokeModel)]),
+                    // TextSpan(text: widget.annotatedJokeModel.plainText, style: TextStyles.defaultJokeStyle),
                   ),
                 ),
                 Row(

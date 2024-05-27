@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zlp_jokes/core/di/di.dart';
 import 'package:zlp_jokes/domain/annotations/repository/annotations_repository.dart';
 import 'package:zlp_jokes/domain/jokes/models/annotated_joke_model.dart';
-import 'package:zlp_jokes/domain/jokes/models/joke_model.dart';
 import 'package:zlp_jokes/domain/jokes/repository/jokes_repository.dart';
 import 'package:zlp_jokes/utils/app_state.dart';
 
