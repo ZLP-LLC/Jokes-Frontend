@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zlp_jokes/core/auth/auth_usecase.dart';
+import 'package:zlp_jokes/domain/auth/repository/auth_usecase.dart';
 import 'package:zlp_jokes/core/di/di.dart';
 import 'package:zlp_jokes/utils/app_state.dart';
 

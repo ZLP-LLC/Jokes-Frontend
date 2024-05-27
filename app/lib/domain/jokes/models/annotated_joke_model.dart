@@ -1,79 +1,58 @@
-class JokePart {
-  JokePart({required this.text, this.annotation});
-
-  final String text;
-  final String? annotation;
-
-  factory JokePart.fromString(String input) {
-    final RegExp exp = RegExp(r'\((.*?)\)');
-
-    String text = input;
-    String? annotation;
-
-    exp.allMatches(input).forEach((match) {
-      text = input.substring(0, match.start).trim();
-      annotation = match.group(1);
-    });
-
-    return JokePart(text: text, annotation: annotation);
-  }
-
-  factory JokePart.fromJson(String input, Map<String, dynamic> json) {
-    final RegExp exp = RegExp(r'\((.*?)\)');
-
-    String text = input;
-    String? annotation;
-
-    exp.allMatches(input).forEach((match) {
-      text = input.substring(0, match.start).trim();
-      annotation = json[match.group(1)];
-    });
-
-    return JokePart(text: text, annotation: annotation);
-  }
-}
+import 'package:zlp_jokes/domain/annotations/models/annotation_model.dart';
+import 'package:zlp_jokes/domain/jokes/models/joke_model.dart';
+import 'package:zlp_jokes/domain/jokes/models/joke_part.dart';
 
 class AnnotatedJokeModel {
   final List<JokePart> jokeParts;
-  final int id;
+  final JokeModel jokeModel;
   String get plainText => jokeParts.map((e) => e.text).join();
 
-  AnnotatedJokeModel({required this.jokeParts, required this.id});
+  const AnnotatedJokeModel({
+    required this.jokeParts,
+    required this.jokeModel,
+  });
 
-  // factory JokeModel.fromString(String input) {
-  //   final List<JokePart> parts = [];
-  //   final RegExp exp = RegExp(r'\[(.*?)\]');
-  //   int lastIndex = 0;
-  //   exp.allMatches(input).forEach((match) {
-  //     parts.add(JokePart(text: input.substring(lastIndex, match.start)));
-  //     parts.add(JokePart.fromString(match.group(1)!));
-  //     lastIndex = match.end;
-  //   });
+  factory AnnotatedJokeModel.fromModels({
+    required JokeModel jokeModel,
+    required List<AnnotationModel> annotationModels,
+  }) {
+    final jokeParts = <JokePart>[];
+    final annotations = annotationModels.toList()..sort((a, b) => a.from.compareTo(b.from));
 
-  //   if (lastIndex < input.length) {
-  //     parts.add(JokePart(text: input.substring(lastIndex)));
-  //   }
-  //   return JokeModel(jokeParts: parts, id: json['id']);
-  // }
+    int currentIndex = 0;
 
-  factory AnnotatedJokeModel.fromJson(Map<String, dynamic> json) {
-    final String input = json['text'];
-    final List<JokePart> parts = [];
-    final RegExp exp = RegExp(r'\[(.*?)\]');
-    int lastIndex = 0;
-    exp.allMatches(input).forEach((match) {
-      parts.add(JokePart(text: input.substring(lastIndex, match.start)));
-      parts.add(JokePart.fromJson(match.group(1)!, json['annottations']));
-      lastIndex = match.end;
-    });
+    for (var annotation in annotations) {
+      if (currentIndex < annotation.from) {
+        jokeParts.add(
+          JokePart(
+            text: jokeModel.text.substring(currentIndex, annotation.from),
+          ),
+        );
+      }
 
-    if (lastIndex < input.length) {
-      parts.add(JokePart(text: input.substring(lastIndex)));
+      jokeParts.add(
+        JokePart(
+          text: jokeModel.text.substring(annotation.from, annotation.to + 1),
+          annotation: annotation.text,
+        ),
+      );
+
+      currentIndex = annotation.to;
     }
-    return AnnotatedJokeModel(jokeParts: parts, id: json['id']);
-  }
 
-  // fa
+    if (currentIndex < jokeModel.text.length) {
+      jokeParts.add(
+        JokePart(
+          text: jokeModel.text.substring(currentIndex),
+        ),
+      );
+    }
+
+    return AnnotatedJokeModel(
+      jokeParts: jokeParts,
+      jokeModel: jokeModel,
+    );
+  }
 
   @override
   String toString() {
