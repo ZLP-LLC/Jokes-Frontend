@@ -13,7 +13,7 @@ class JokeScreenCubit extends Cubit<AppState> {
   final _annotationsRepository = getIt<AnnotationsRepository>();
   final int jokeId;
 
-  bool isRatedNow = false;
+  bool notRated = true;
 
   void loadJoke(int jokeId) async {
     try {
@@ -25,5 +25,9 @@ class JokeScreenCubit extends Cubit<AppState> {
     } catch (e) {
       emit(AppState.catchErrorHandler(e));
     }
+  }
+
+  void rate() {
+    notRated = false;
   }
 }

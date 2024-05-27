@@ -22,15 +22,21 @@ class JokeCard extends StatefulWidget {
 
 class _JokeCardState extends State<JokeCard> {
   late bool _isAuthorized;
+  late bool _notRated;
 
   @override
   void initState() {
     super.initState();
     _isAuthorized = false;
+    _notRated = true;
     context.read<AuthCubit>().isAuthorized().then((value) {
       setState(() {
         _isAuthorized = value;
       });
+    });
+
+    setState(() {
+      _notRated = context.read<JokeScreenCubit>().notRated;
     });
   }
 
@@ -141,7 +147,7 @@ class _JokeCardState extends State<JokeCard> {
                         size: 28,
                       ),
                     ),
-                    if (_isAuthorized && !context.read<JokeScreenCubit>().isRatedNow)
+                    if (_isAuthorized && _notRated)
                       SizedBox(
                         width: 160,
                         height: 40,
@@ -162,7 +168,7 @@ class _JokeCardState extends State<JokeCard> {
                               ),
                             );
                             if (result != null) {
-                              // context. //TODO isratednow
+                              context.read<JokeScreenCubit>().rate();
                               context.read<JokeScreenCubit>().loadJoke(
                                     widget.annotatedJokeModel.jokeModel.id,
                                   );
@@ -176,6 +182,15 @@ class _JokeCardState extends State<JokeCard> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
+                        ),
+                      ),
+                    if (_isAuthorized && !_notRated)
+                      const Text(
+                        'Спасибо за оценку!',
+                        style: TextStyle(
+                          color: AppColors.color800,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     IconButton(
