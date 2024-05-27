@@ -4,7 +4,6 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:zlp_jokes/core/di/di.dart';
 import 'package:zlp_jokes/features/auth/bloc/auth_cubit.dart';
 import 'package:zlp_jokes/features/home/bloc/home_screen_cubit.dart';
-import 'package:zlp_jokes/features/home/home_screen.dart';
 import 'package:zlp_jokes/features/joke_screen/joke_screen.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
 import 'package:zlp_jokes/utils/routes.dart';
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(builder: (context) => JokeScreen(jokeId: id), settings: settings);
         }
       }
-      return MaterialPageRoute(builder: (context) => const HomeScreen());
+      return null;
     },
     theme: ThemeData(
       appBarTheme: const AppBarTheme(
