@@ -16,15 +16,11 @@ import 'package:zlp_jokes/core/http_api/http_api.dart' as _i6;
 import 'package:zlp_jokes/core/network_handler/network_handler.dart' as _i3;
 import 'package:zlp_jokes/core/secure_storage/secure_storage.dart' as _i13;
 import 'package:zlp_jokes/core/services/network_service.dart' as _i7;
-import 'package:zlp_jokes/domain/annotations/repository/annotations_repostitory.dart'
-    as _i11;
+import 'package:zlp_jokes/domain/annotations/repository/annotations_repository.dart' as _i11;
 import 'package:zlp_jokes/domain/auth/repository/auth_usecase.dart' as _i9;
-import 'package:zlp_jokes/domain/auth/repository/server_auth_datasource.dart'
-    as _i8;
-import 'package:zlp_jokes/domain/jokes/repository/jokes_repository.dart'
-    as _i12;
-import 'package:zlp_jokes/domain/rating/repository/rating_repository.dart'
-    as _i10;
+import 'package:zlp_jokes/domain/auth/repository/server_auth_datasource.dart' as _i8;
+import 'package:zlp_jokes/domain/jokes/repository/jokes_repository.dart' as _i12;
+import 'package:zlp_jokes/domain/rating/repository/rating_repository.dart' as _i10;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -39,29 +35,22 @@ extension GetItInjectableX on _i1.GetIt {
     );
     final secureStorage = _$SecureStorage();
     gh.factory<_i3.NetworkHandler>(() => _i3.NetworkHandler());
-    gh.singleton<_i4.AuthTokenExpirationController>(
-        () => _i4.AuthTokenExpirationController());
+    gh.singleton<_i4.AuthTokenExpirationController>(() => _i4.AuthTokenExpirationController());
     gh.lazySingleton<_i5.FlutterSecureStorage>(() => secureStorage.instance);
     gh.factory<_i6.HttpAPI>(() => _i6.HttpAPI(
           gh<_i4.AuthTokenExpirationController>(),
           gh<_i5.FlutterSecureStorage>(),
         ));
-    gh.factory<_i7.NetworkService>(
-        () => _i7.NetworkService(httpAPI: gh<_i6.HttpAPI>()));
-    gh.factory<_i8.ServerAuthDataSource>(() =>
-        _i8.ServerAuthDataSource(networkService: gh<_i7.NetworkService>()));
+    gh.factory<_i7.NetworkService>(() => _i7.NetworkService(httpAPI: gh<_i6.HttpAPI>()));
+    gh.factory<_i8.ServerAuthDataSource>(() => _i8.ServerAuthDataSource(networkService: gh<_i7.NetworkService>()));
     gh.factory<_i9.AuthUseCase>(() => _i9.AuthUseCase(
           serverAuthDataSource: gh<_i8.ServerAuthDataSource>(),
           secureStorage: gh<_i5.FlutterSecureStorage>(),
-          authTokenExpirationController:
-              gh<_i4.AuthTokenExpirationController>(),
+          authTokenExpirationController: gh<_i4.AuthTokenExpirationController>(),
         ));
-    gh.factory<_i10.RatingRepository>(
-        () => _i10.RatingRepository(gh<_i7.NetworkService>()));
-    gh.factory<_i11.AnnotationsRepostitory>(
-        () => _i11.AnnotationsRepostitory(gh<_i7.NetworkService>()));
-    gh.factory<_i12.JokesRepository>(
-        () => _i12.JokesRepository(gh<_i7.NetworkService>()));
+    gh.factory<_i10.RatingRepository>(() => _i10.RatingRepository(gh<_i7.NetworkService>()));
+    gh.factory<_i11.AnnotationsRepository>(() => _i11.AnnotationsRepository(gh<_i7.NetworkService>()));
+    gh.factory<_i12.JokesRepository>(() => _i12.JokesRepository(gh<_i7.NetworkService>()));
     return this;
   }
 }

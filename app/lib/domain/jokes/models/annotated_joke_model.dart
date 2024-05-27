@@ -14,44 +14,47 @@ class AnnotatedJokeModel {
 
   factory AnnotatedJokeModel.fromModels({
     required JokeModel jokeModel,
-    required List<AnnotationModel> annotationModels,
+    required List<AnnotationModel>? annotationModels,
   }) {
-    final jokeParts = <JokePart>[];
-    final annotations = annotationModels.toList()..sort((a, b) => a.from.compareTo(b.from));
+    if (annotationModels != null) {
+      final jokeParts = <JokePart>[];
+      final annotations = annotationModels.toList()..sort((a, b) => a.from.compareTo(b.from));
 
-    int currentIndex = 0;
+      int currentIndex = 0;
 
-    for (var annotation in annotations) {
-      if (currentIndex < annotation.from) {
+      for (var annotation in annotations) {
+        if (currentIndex < annotation.from) {
+          jokeParts.add(
+            JokePart(
+              text: jokeModel.text.substring(currentIndex, annotation.from),
+            ),
+          );
+        }
+
         jokeParts.add(
           JokePart(
-            text: jokeModel.text.substring(currentIndex, annotation.from),
+            text: jokeModel.text.substring(annotation.from, annotation.to),
+            annotation: annotation.text,
+          ),
+        );
+
+        currentIndex = annotation.to;
+      }
+
+      if (currentIndex < jokeModel.text.length) {
+        jokeParts.add(
+          JokePart(
+            text: jokeModel.text.substring(currentIndex),
           ),
         );
       }
 
-      jokeParts.add(
-        JokePart(
-          text: jokeModel.text.substring(annotation.from, annotation.to + 1),
-          annotation: annotation.text,
-        ),
-      );
-
-      currentIndex = annotation.to;
-    }
-
-    if (currentIndex < jokeModel.text.length) {
-      jokeParts.add(
-        JokePart(
-          text: jokeModel.text.substring(currentIndex),
-        ),
+      return AnnotatedJokeModel(
+        jokeParts: jokeParts,
+        jokeModel: jokeModel,
       );
     }
-
-    return AnnotatedJokeModel(
-      jokeParts: jokeParts,
-      jokeModel: jokeModel,
-    );
+    return AnnotatedJokeModel(jokeModel: jokeModel, jokeParts: [JokePart(text: jokeModel.text)]);
   }
 
   @override

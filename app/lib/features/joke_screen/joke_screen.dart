@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zlp_jokes/domain/jokes/models/annotated_joke_model.dart';
 import 'package:zlp_jokes/domain/jokes/models/joke_model.dart';
 import 'package:zlp_jokes/features/home/bloc/home_screen_cubit.dart';
 import 'package:zlp_jokes/features/joke_screen/bloc/joke_screen_cubit.dart';
@@ -52,8 +53,8 @@ class _JokeScreenState extends State<JokeScreen> {
                       children: [
                         BlocBuilder<JokeScreenCubit, AppState>(
                           builder: (context, state) {
-                            if (state is AppStateSuccess<JokeModel>) {
-                              return JokeCard(jokeModel: state.data!);
+                            if (state is AppStateSuccess<AnnotatedJokeModel>) {
+                              return JokeCard(annotatedJokeModel: state.data!);
                             }
                             return const Center(child: CircularProgressIndicator());
                           },

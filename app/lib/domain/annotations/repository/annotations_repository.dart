@@ -5,13 +5,16 @@ import 'package:zlp_jokes/core/services/network_service.dart';
 import 'package:zlp_jokes/domain/annotations/models/annotation_model.dart';
 
 @injectable
-class AnnotationsRepostitory {
+class AnnotationsRepository {
   final NetworkService networkService;
 
-  AnnotationsRepostitory(this.networkService);
+  AnnotationsRepository(this.networkService);
 
-  Future<List<AnnotationModel>> getAnnotations({required int jokeId}) async {
-    final response = await networkService.get<List<dynamic>>('/joke/$jokeId/annotations');
+  Future<List<AnnotationModel>?> getAnnotations({required int jokeId}) async {
+    final response = await networkService.get('/joke/$jokeId/annotations');
+    if (response.data == null) {
+      return null;
+    }
     final annotations =
         (response.data as List<dynamic>).map((e) => AnnotationModel.fromJson(e as Map<String, dynamic>)).toList();
     return annotations;
