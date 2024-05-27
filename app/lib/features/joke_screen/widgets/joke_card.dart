@@ -6,6 +6,7 @@ import 'package:zlp_jokes/core/constants.dart';
 import 'package:zlp_jokes/domain/jokes/models/annotated_joke_model.dart';
 import 'package:zlp_jokes/features/auth/bloc/auth_cubit.dart';
 import 'package:zlp_jokes/features/joke_screen/bloc/joke_screen_cubit.dart';
+import 'package:zlp_jokes/features/joke_screen/widgets/annotation_view.dart';
 import 'package:zlp_jokes/features/joke_screen/widgets/rating_widget.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
 import 'package:zlp_jokes/utils/text_styles.dart';
@@ -20,14 +21,10 @@ class JokeCard extends StatefulWidget {
 }
 
 class _JokeCardState extends State<JokeCard> {
-  // List<TextSpan> textSpans = [TextSpan()];
-
   late bool _isAuthorized;
-  // latwidget.e JokeModel jokeModel;
 
   @override
   void initState() {
-    // spansGenerator(jokeModel);
     super.initState();
     _isAuthorized = false;
     context.read<AuthCubit>().isAuthorized().then((value) {
@@ -57,8 +54,8 @@ class _JokeCardState extends State<JokeCard> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return Dialog(
-                      child: Text(element.annotation!),
+                    return AnnotationView(
+                      text: element.annotation!,
                     );
                   },
                 );
@@ -121,7 +118,6 @@ class _JokeCardState extends State<JokeCard> {
                   ),
                   child: SelectableText.rich(
                     TextSpan(children: [...spansGenerator(widget.annotatedJokeModel)]),
-                    // TextSpan(text: widget.annotatedJokeModel.plainText, style: TextStyles.defaultJokeStyle),
                   ),
                 ),
                 Row(
