@@ -58,6 +58,7 @@ class _JokeCardState extends State<JokeCard> {
             recognizer: TapGestureRecognizer()
               ..onTap = () {
                 showDialog(
+                  barrierColor: Colors.transparent,
                   context: context,
                   builder: (context) {
                     return AnnotationView(
@@ -162,6 +163,7 @@ class _JokeCardState extends State<JokeCard> {
                           ),
                           onPressed: () async {
                             final result = await showDialog(
+                              barrierColor: Colors.transparent,
                               context: context,
                               builder: (BuildContext context) => RatingWidget(
                                 jokeId: widget.annotatedJokeModel.jokeModel.id,
