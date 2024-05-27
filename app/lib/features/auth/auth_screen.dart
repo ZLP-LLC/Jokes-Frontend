@@ -123,7 +123,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                         side: WidgetStateProperty.all(
                                           const BorderSide(
                                             color: AppColors.color400,
-                                            width: 2.0,
+                                            width: 2.5,
                                           ),
                                         ),
                                       ),

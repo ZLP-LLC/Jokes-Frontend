@@ -5,6 +5,7 @@ import 'package:zlp_jokes/core/constants.dart';
 import 'package:zlp_jokes/domain/jokes/models/joke_model.dart';
 // import 'package:zlp_jokes/domain/jokes/models/annotated_joke_model.dart';
 import 'package:zlp_jokes/features/auth/bloc/auth_cubit.dart';
+import 'package:zlp_jokes/features/joke_screen/bloc/joke_screen_cubit.dart';
 import 'package:zlp_jokes/features/joke_screen/widgets/rating_widget.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
 import 'package:zlp_jokes/utils/text_styles.dart';
@@ -136,6 +137,41 @@ class _JokeCardState extends State<JokeCard> {
                         size: 28,
                       ),
                     ),
+                    //TODO насрать кубитом чтобы работало
+                    if (_isAuthorized && !context.read<JokeScreenCubit>().isRatedNow)
+                      SizedBox(
+                        width: 160,
+                        height: 40,
+                        child: OutlinedButton(
+                          style: ButtonStyle(
+                            side: WidgetStateProperty.all(
+                              const BorderSide(
+                                color: AppColors.color400,
+                                width: 2.5,
+                              ),
+                            ),
+                          ),
+                          onPressed: () async {
+                            final result = await showDialog(
+                              context: context,
+                              builder: (BuildContext context) => RatingWidget(
+                                jokeId: widget.jokeModel.id,
+                              ),
+                            );
+                            if (result != null) {
+                              context.read<JokeScreenCubit>().loadJoke(widget.jokeModel.id);
+                            }
+                          },
+                          child: const Text(
+                            'Оценить',
+                            style: TextStyle(
+                              color: AppColors.color800,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
                     IconButton(
                       onPressed: () async {
                         await Clipboard.setData(ClipboardData(text: widget.jokeModel.text));
@@ -158,12 +194,12 @@ class _JokeCardState extends State<JokeCard> {
             ),
           ),
         ),
-        if (_isAuthorized) ...[
-          const SizedBox(
-            height: 20,
-          ),
-          const RatingWidget(),
-        ],
+        // if (_isAuthorized) ...[
+        //   const SizedBox(
+        //     height: 20,
+        //   ),
+        //   const RatingWidget(),
+        // ],
       ],
     );
   }
