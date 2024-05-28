@@ -69,6 +69,10 @@ class MyApp extends StatelessWidget {
         focusColor: AppColors.color900,
         floatingLabelStyle: TextStyle(color: AppColors.color900),
       ),
+      textSelectionTheme: const TextSelectionThemeData(
+        selectionColor: AppColors.color400, // Цвет выделенного текста
+        selectionHandleColor: AppColors.color400, // Цвет ручки выделения
+      ),
     ),
   );
 

@@ -32,6 +32,35 @@ class _AuthScreenState extends State<AuthScreen> {
     super.dispose();
   }
 
+  void _onPress() async {
+    final login = _loginController.text.trim();
+    final password = _passwordController.text.trim();
+    if (login.isNotEmpty && password.isNotEmpty) {
+      if (password.length >= 8) {
+        final success = await context.read<AuthCubit>().tryAuth(login: login, password: password);
+
+        if (success && mounted) {
+          context.read<HomeScreenCubit>().loadJokes();
+          Navigator.of(context).pop();
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 2),
+            content: Text('Пароль должен быть не менее 8 символов'),
+          ),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 2),
+          content: Text('Заполните все поля'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -89,6 +118,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ),
                                 const SizedBox(height: 16),
                                 TextFormField(
+                                  onFieldSubmitted: (_) => _onPress(),
                                   controller: _passwordController,
                                   decoration: InputDecoration(
                                     labelText: 'Пароль',
@@ -127,36 +157,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                           ),
                                         ),
                                       ),
-                                      onPressed: () async {
-                                        final login = _loginController.text.trim();
-                                        final password = _passwordController.text.trim();
-                                        if (login.isNotEmpty && password.isNotEmpty) {
-                                          if (password.length >= 8) {
-                                            final success = await context
-                                                .read<AuthCubit>()
-                                                .tryAuth(login: login, password: password);
-
-                                            if (success && mounted) {
-                                              context.read<HomeScreenCubit>().loadJokes();
-                                              Navigator.of(context).pop();
-                                            }
-                                          } else {
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              const SnackBar(
-                                                duration: Duration(seconds: 2),
-                                                content: Text('Пароль должен быть не менее 8 символов'),
-                                              ),
-                                            );
-                                          }
-                                        } else {
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            const SnackBar(
-                                              duration: Duration(seconds: 2),
-                                              content: Text('Заполните все поля'),
-                                            ),
-                                          );
-                                        }
-                                      },
+                                      onPressed: _onPress,
                                       child: const Text(
                                         'Войти',
                                         style: TextStyle(
