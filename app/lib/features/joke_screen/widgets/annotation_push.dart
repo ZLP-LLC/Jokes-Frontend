@@ -49,7 +49,7 @@ class _AnnotationPushWidgetState extends State<AnnotationPushWidget> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: AppColors.color300,
+                        color: AppColors.color800,
                         borderRadius: BorderRadius.circular(25),
                         border: Border.all(
                           color: AppColors.color900,
@@ -60,19 +60,65 @@ class _AnnotationPushWidgetState extends State<AnnotationPushWidget> {
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'Добавление аннотации',
-                              style: TextStyle(color: AppColors.color200, fontSize: 24, fontWeight: FontWeight.w600),
+                            const Center(
+                              child: Text(
+                                'Добавление аннотации',
+                                style: TextStyle(
+                                  color: AppColors.color200,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                             ),
-                            const Text(
+                            Text(
                               widget.textToAnnotate,
-                              style: TextStyles.defaultJokeStyle,
+                              style: TextStyles.defaultJokeStyle.copyWith(
+                                color: AppColors.color200,
+                              ),
                             ),
-                            TextFormField(
-                              controller: _annotationController,
+                            const SizedBox(height: 16),
+                            Material(
+                              child: TextFormField(
+                                controller: _annotationController,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Center(
+                              child: SizedBox(
+                                width: 160,
+                                height: 60,
+                                child: OutlinedButton(
+                                  style: ButtonStyle(
+                                    side: WidgetStateProperty.all(
+                                      const BorderSide(
+                                        color: AppColors.color400,
+                                        width: 2.5,
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    await context.read<AnnotationPushCubit>().pushAnnotation(
+                                          jokeId: widget.jokeId,
+                                          textFrom: widget.textFrom,
+                                          textTo: widget.textTo,
+                                          annotation: _annotationController.text,
+                                        );
+                                    Navigator.of(context).pop(true);
+                                  },
+                                  child: const Text(
+                                    textAlign: TextAlign.center,
+                                    'Предложить\nаннотацию',
+                                    style: TextStyle(
+                                      color: AppColors.color200,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),

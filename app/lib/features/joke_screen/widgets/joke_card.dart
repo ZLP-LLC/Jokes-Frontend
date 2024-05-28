@@ -6,6 +6,7 @@ import 'package:zlp_jokes/core/constants.dart';
 import 'package:zlp_jokes/domain/jokes/models/annotated_joke_model.dart';
 import 'package:zlp_jokes/features/auth/bloc/auth_cubit.dart';
 import 'package:zlp_jokes/features/joke_screen/bloc/joke_screen_cubit.dart';
+import 'package:zlp_jokes/features/joke_screen/widgets/annotation_push.dart';
 import 'package:zlp_jokes/features/joke_screen/widgets/annotation_view.dart';
 import 'package:zlp_jokes/features/joke_screen/widgets/rating_widget.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
@@ -23,12 +24,15 @@ class JokeCard extends StatefulWidget {
 class _JokeCardState extends State<JokeCard> {
   late bool _isAuthorized;
   late bool _notRated;
-
+  bool _isSelected = false;
+  late TextSelection _selection;
+  late List<TextSpan> _textSpans;
   @override
   void initState() {
     super.initState();
     _isAuthorized = false;
     _notRated = true;
+    _textSpans = _spansGenerator(widget.annotatedJokeModel);
     context.read<AuthCubit>().isAuthorized().then((value) {
       setState(() {
         _isAuthorized = value;
@@ -40,7 +44,7 @@ class _JokeCardState extends State<JokeCard> {
     });
   }
 
-  List<TextSpan> spansGenerator(AnnotatedJokeModel model) {
+  List<TextSpan> _spansGenerator(AnnotatedJokeModel model) {
     List<TextSpan> textSpans = [];
     for (var element in model.jokeParts) {
       if (element.annotation == null) {
@@ -56,17 +60,15 @@ class _JokeCardState extends State<JokeCard> {
             text: element.text,
             style: TextStyles.annotationStyle,
             recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                showDialog(
-                  barrierColor: Colors.transparent,
-                  context: context,
-                  builder: (context) {
-                    return AnnotationView(
-                      text: element.annotation!,
-                    );
-                  },
-                );
-              },
+              ..onTap = () => showDialog(
+                    barrierColor: Colors.transparent,
+                    context: context,
+                    builder: (context) {
+                      return AnnotationView(
+                        text: element.annotation!,
+                      );
+                    },
+                  ),
           ),
         );
       }
@@ -124,7 +126,19 @@ class _JokeCardState extends State<JokeCard> {
                     vertical: 8,
                   ),
                   child: SelectableText.rich(
-                    TextSpan(children: [...spansGenerator(widget.annotatedJokeModel)]),
+                    TextSpan(children: _textSpans),
+                    onSelectionChanged: (selection, cause) {
+                      if (selection.baseOffset != selection.extentOffset) {
+                        setState(() {
+                          _selection = selection;
+                          _isSelected = true;
+                        });
+                      } else {
+                        setState(() {
+                          _isSelected = false;
+                        });
+                      }
+                    },
                   ),
                 ),
                 Row(
@@ -148,7 +162,45 @@ class _JokeCardState extends State<JokeCard> {
                         size: 28,
                       ),
                     ),
-                    if (_isAuthorized && _notRated)
+                    if (_isSelected && _isAuthorized)
+                      SizedBox(
+                        width: 160,
+                        height: 60,
+                        child: OutlinedButton(
+                          style: ButtonStyle(
+                            side: WidgetStateProperty.all(
+                              const BorderSide(
+                                color: AppColors.color400,
+                                width: 2.5,
+                              ),
+                            ),
+                          ),
+                          onPressed: () async {
+                            showDialog(
+                              barrierColor: Colors.transparent,
+                              context: context,
+                              builder: (context) {
+                                return AnnotationPushWidget(
+                                  textFrom: _selection.start,
+                                  textTo: _selection.end,
+                                  jokeId: widget.annotatedJokeModel.jokeModel.id,
+                                  textToAnnotate: _selection.textInside(widget.annotatedJokeModel.plainText),
+                                );
+                              },
+                            );
+                          },
+                          child: const Text(
+                            'Создать\nаннотацию',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColors.color800,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (_isAuthorized && _notRated && !_isSelected)
                       SizedBox(
                         width: 160,
                         height: 40,
@@ -186,7 +238,7 @@ class _JokeCardState extends State<JokeCard> {
                           ),
                         ),
                       ),
-                    if (_isAuthorized && !_notRated)
+                    if (_isAuthorized && !_notRated && !_isSelected)
                       const Text(
                         'Спасибо за оценку!',
                         style: TextStyle(
