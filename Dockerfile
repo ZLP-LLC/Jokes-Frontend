@@ -28,7 +28,7 @@ COPY --chown=builder:builder ./app/pubspec.yaml ./app/pubspec.lock ./
 RUN flutter clean; \
   flutter pub get;
 COPY --chown=builder:builder ./app $APP
-RUN flutter build web --release --wasm
+RUN flutter build web --release --wasm --web-renderer html
 
 FROM nginx:stable-alpine
 ENV NGINX=/usr/share/nginx
