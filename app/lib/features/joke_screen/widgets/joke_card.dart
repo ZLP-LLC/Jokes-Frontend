@@ -217,12 +217,6 @@ class _JokeCardState extends State<JokeCard> {
             ),
           ),
         ),
-        // if (_isAuthorized) ...[
-        //   const SizedBox(
-        //     height: 20,
-        //   ),
-        //   const RatingWidget(),
-        // ],
       ],
     );
   }
