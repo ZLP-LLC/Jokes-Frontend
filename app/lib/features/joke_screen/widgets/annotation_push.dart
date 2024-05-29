@@ -32,6 +32,12 @@ class _AnnotationPushWidgetState extends State<AnnotationPushWidget> {
   }
 
   @override
+  void dispose() {
+    _annotationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AnnotationPushCubit(),

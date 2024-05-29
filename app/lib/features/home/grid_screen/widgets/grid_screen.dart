@@ -7,8 +7,8 @@ import 'package:zlp_jokes/features/home/grid_screen/widgets/simple_joke_card.dar
 import 'package:zlp_jokes/utils/app_state.dart';
 
 class GridScreen extends StatefulWidget {
-  const GridScreen({super.key});
-
+  const GridScreen({super.key, required this.jokes});
+  final List<JokeModel> jokes;
   @override
   State<GridScreen> createState() => _GridScreenState();
 }
@@ -90,30 +90,13 @@ class _GridScreenState extends State<GridScreen> {
                           ],
                         ),
                         const SizedBox(height: 36),
-                        BlocBuilder<HomeScreenCubit, AppState>(
-                          builder: (context, state) {
-                            if (state is AppStateLoading) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else if (state is AppStateWrong) {
-                              if (state is AppStateError) {
-                                return Center(
-                                  child: Text(state.message),
-                                );
-                              }
-                            } else if (state is AppStateSuccess<List<JokeModel>>) {
-                              return StaggeredGrid.count(
-                                crossAxisCount: crossAxisCount,
-                                crossAxisSpacing: 36,
-                                mainAxisSpacing: 36,
-                                children: state.data!.map((joke) {
-                                  return SimpleJokeCard(jokeModel: joke);
-                                }).toList(),
-                              );
-                            }
-                            return const SizedBox.shrink();
-                          },
+                        StaggeredGrid.count(
+                          crossAxisCount: crossAxisCount,
+                          crossAxisSpacing: 36,
+                          mainAxisSpacing: 36,
+                          children: widget.jokes.map((joke) {
+                            return SimpleJokeCard(jokeModel: joke);
+                          }).toList(),
                         ),
                       ],
                     ),

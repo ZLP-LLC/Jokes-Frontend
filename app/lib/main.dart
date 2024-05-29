@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         color: AppColors.color900,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: AppColors.color200),
         centerTitle: true,
       ),
       scaffoldBackgroundColor: Colors.white,
@@ -70,8 +70,8 @@ class MyApp extends StatelessWidget {
         floatingLabelStyle: TextStyle(color: AppColors.color900),
       ),
       textSelectionTheme: const TextSelectionThemeData(
-        selectionColor: AppColors.color400, // Цвет выделенного текста
-        selectionHandleColor: AppColors.color400, // Цвет ручки выделения
+        selectionColor: AppColors.color400,
+        selectionHandleColor: AppColors.color400,
       ),
     ),
   );
