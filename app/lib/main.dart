@@ -45,6 +45,12 @@ class MyApp extends StatelessWidget {
       return null;
     },
     theme: ThemeData(
+      colorScheme: const ColorScheme.light(
+        primary: AppColors.color900,
+        secondary: AppColors.color400,
+        onPrimary: AppColors.color400,
+        onSecondary: AppColors.color900,
+      ),
       appBarTheme: const AppBarTheme(
         color: AppColors.color900,
         elevation: 0,
