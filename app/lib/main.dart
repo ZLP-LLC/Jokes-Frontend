@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   final _app = MaterialApp(
-    title: 'ZLP jokes',
+    title: 'ZLP Смешнульки',
     debugShowCheckedModeBanner: false,
     localizationsDelegates: const [
       GlobalMaterialLocalizations.delegate,
