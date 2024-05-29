@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<JokeModel> _jokesToShow = [];
   bool _showSearch = false;
   late TextEditingController _searchController;
+  double _savedScrollPosition = 0.0;
 
   @override
   void initState() {
@@ -99,6 +100,10 @@ class _HomeScreenState extends State<HomeScreen> {
             if (!_showSearch) _jokesToShow = _jokes;
             return GridScreen(
               jokes: _jokesToShow,
+              savedScrollPosition: _savedScrollPosition,
+              onScrollPositionChanged: (position) {
+                _savedScrollPosition = position;
+              },
             );
           }
           return const SizedBox.shrink();

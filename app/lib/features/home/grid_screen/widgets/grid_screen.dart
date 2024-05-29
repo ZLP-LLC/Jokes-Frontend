@@ -7,21 +7,24 @@ import 'package:zlp_jokes/features/home/grid_screen/widgets/simple_joke_card.dar
 import 'package:zlp_jokes/utils/app_state.dart';
 
 class GridScreen extends StatefulWidget {
-  const GridScreen({super.key, required this.jokes});
+  const GridScreen(
+      {super.key, required this.jokes, required this.savedScrollPosition, required this.onScrollPositionChanged});
   final List<JokeModel> jokes;
+  final double savedScrollPosition;
+  final Function(double) onScrollPositionChanged;
+
   @override
   State<GridScreen> createState() => _GridScreenState();
 }
 
 class _GridScreenState extends State<GridScreen> {
   late ScrollController _scrollController;
-  double _savedScrollPosition = 0.0;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController(
-      initialScrollOffset: _savedScrollPosition,
+      initialScrollOffset: widget.savedScrollPosition,
     );
     _scrollController.addListener(_saveScrollPosition);
   }
@@ -34,7 +37,7 @@ class _GridScreenState extends State<GridScreen> {
   }
 
   void _saveScrollPosition() {
-    _savedScrollPosition = _scrollController.position.pixels;
+    widget.onScrollPositionChanged(_scrollController.position.pixels);
   }
 
   @override
@@ -43,7 +46,7 @@ class _GridScreenState extends State<GridScreen> {
       listener: (context, state) {
         if (state is AppStateSuccess<List<JokeModel>>) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            _scrollController.jumpTo(_savedScrollPosition);
+            _scrollController.jumpTo(widget.savedScrollPosition);
           });
         }
       },
