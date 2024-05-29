@@ -7,8 +7,12 @@ import 'package:zlp_jokes/features/home/grid_screen/widgets/simple_joke_card.dar
 import 'package:zlp_jokes/utils/app_state.dart';
 
 class GridScreen extends StatefulWidget {
-  const GridScreen(
-      {super.key, required this.jokes, required this.savedScrollPosition, required this.onScrollPositionChanged});
+  const GridScreen({
+    super.key,
+    required this.jokes,
+    required this.savedScrollPosition,
+    required this.onScrollPositionChanged,
+  });
   final List<JokeModel> jokes;
   final double savedScrollPosition;
   final Function(double) onScrollPositionChanged;
