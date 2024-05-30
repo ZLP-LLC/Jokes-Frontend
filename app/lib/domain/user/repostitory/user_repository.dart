@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:zlp_jokes/core/services/network_service.dart';
-import 'package:zlp_jokes/domain/jokes/models/user_model.dart';
+import 'package:zlp_jokes/domain/user/models/user_model.dart';
 
 @injectable
 class UserRepository {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zlp_jokes/domain/jokes/models/user_model.dart';
+import 'package:zlp_jokes/domain/user/models/user_model.dart';
 import 'package:zlp_jokes/features/account/cubit/account_cubit.dart';
 import 'package:zlp_jokes/features/account/widgets/joke_push_widget.dart';
 import 'package:zlp_jokes/features/home/bloc/home_screen_cubit.dart';
