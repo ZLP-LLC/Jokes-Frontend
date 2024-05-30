@@ -116,30 +116,32 @@ class _AccountScreenState extends State<AccountScreen> {
                   ],
                 );
               }
-              return SizedBox(
-                height: 40,
-                child: OutlinedButton(
-                  style: ButtonStyle(
-                    side: WidgetStateProperty.all(
-                      const BorderSide(
-                        color: AppColors.color400,
-                        width: 2.5,
+              return Center(
+                child: SizedBox(
+                  height: 40,
+                  child: OutlinedButton(
+                    style: ButtonStyle(
+                      side: WidgetStateProperty.all(
+                        const BorderSide(
+                          color: AppColors.color400,
+                          width: 2.5,
+                        ),
                       ),
                     ),
-                  ),
-                  onPressed: () async {
-                    final success = await context.read<AccountScreenCubit>().logout();
-                    if (success && mounted) {
-                      context.read<HomeScreenCubit>().loadJokes();
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: const Text(
-                    'Выйти',
-                    style: TextStyle(
-                      color: AppColors.color800,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                    onPressed: () async {
+                      final success = await context.read<AccountScreenCubit>().logout();
+                      if (success && mounted) {
+                        context.read<HomeScreenCubit>().loadJokes();
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: const Text(
+                      'Выйти',
+                      style: TextStyle(
+                        color: AppColors.color800,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
