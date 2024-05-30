@@ -111,13 +111,13 @@ class _AnnotationPushWidgetState extends State<AnnotationPushWidget> {
                                       ),
                                     ),
                                     onPressed: () async {
-                                      await context.read<AnnotationPushCubit>().pushAnnotation(
+                                      final result = await context.read<AnnotationPushCubit>().pushAnnotation(
                                             jokeId: widget.jokeId,
                                             textFrom: widget.textFrom,
                                             textTo: widget.textTo,
                                             annotation: _annotationController.text,
                                           );
-                                      Navigator.of(context).pop(true);
+                                      Navigator.of(context).pop(result);
                                     },
                                     child: const Text(
                                       textAlign: TextAlign.center,

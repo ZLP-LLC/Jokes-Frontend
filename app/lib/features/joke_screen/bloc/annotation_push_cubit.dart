@@ -9,7 +9,7 @@ class AnnotationPushCubit extends Cubit<AppState> {
 
   final _repository = getIt<AnnotationsRepository>();
 
-  Future<void> pushAnnotation({
+  Future<bool> pushAnnotation({
     required int jokeId,
     required int textFrom,
     required int textTo,
@@ -21,9 +21,10 @@ class AnnotationPushCubit extends Cubit<AppState> {
         jokeId: jokeId,
         annotation: AnnotationModel(text: annotation, from: textFrom, to: textTo),
       );
-      emit(AppStateSuccess());
+      return true;
     } catch (e) {
       emit(AppState.catchErrorHandler(e));
     }
+    return false;
   }
 }

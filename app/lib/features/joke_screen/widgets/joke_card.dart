@@ -176,7 +176,7 @@ class _JokeCardState extends State<JokeCard> {
                             ),
                           ),
                           onPressed: () async {
-                            showDialog(
+                            final result = await showDialog(
                               barrierColor: Colors.transparent,
                               context: context,
                               builder: (context) {
@@ -188,6 +188,11 @@ class _JokeCardState extends State<JokeCard> {
                                 );
                               },
                             );
+                            if (result != null && result) {
+                              context.read<JokeScreenCubit>().loadJoke(
+                                    widget.annotatedJokeModel.jokeModel.id,
+                                  );
+                            }
                           },
                           child: const Text(
                             'Создать\nаннотацию',
