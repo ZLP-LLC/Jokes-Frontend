@@ -13,7 +13,8 @@ class HomeScreenCubit extends Cubit<AppState> {
     try {
       emit(AppStateLoading());
       final jokes = await _repository.getJokes();
-      emit(AppStateSuccess(jokes.reversed.toList()));
+      jokes.sort((a, b) => b.id.compareTo(a.id));
+      emit(AppStateSuccess(jokes));
     } catch (e) {
       emit(AppState.catchErrorHandler(e));
     }
