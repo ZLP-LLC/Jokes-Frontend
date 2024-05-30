@@ -1,4 +1,7 @@
-class UserLoginRequestDTO {
+import 'package:flutter/foundation.dart';
+
+@immutable
+final class UserLoginRequestDTO {
   final String username;
   final String password;
 

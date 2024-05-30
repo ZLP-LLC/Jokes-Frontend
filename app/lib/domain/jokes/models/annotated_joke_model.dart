@@ -1,8 +1,10 @@
 import 'package:zlp_jokes/domain/annotations/models/annotation_model.dart';
 import 'package:zlp_jokes/domain/jokes/models/joke_model.dart';
 import 'package:zlp_jokes/domain/jokes/models/joke_part.dart';
+import 'package:flutter/foundation.dart';
 
-class AnnotatedJokeModel {
+@immutable
+final class AnnotatedJokeModel {
   final List<JokePart> jokeParts;
   final JokeModel jokeModel;
   String get plainText => jokeParts.map((e) => e.text).join();
