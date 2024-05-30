@@ -18,4 +18,8 @@ class JokesRepository {
     final response = await networkService.get('/joke/$id');
     return JokeModel.fromJson(response.data);
   }
+
+  Future<void> pushJoke(String text) async {
+    await networkService.post('/joke', data: {'text': text});
+  }
 }
