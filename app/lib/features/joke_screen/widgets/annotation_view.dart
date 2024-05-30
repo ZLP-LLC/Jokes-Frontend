@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:link_text/link_text.dart';
 import 'package:zlp_jokes/utils/app_colors.dart';
 import 'package:zlp_jokes/utils/text_styles.dart';
 
@@ -34,7 +35,11 @@ class AnnotationView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(text, style: TextStyles.defaultJokeStyle),
+                      LinkText(
+                        text,
+                        linkStyle: TextStyles.defaultJokeStyle.copyWith(color: Colors.blue),
+                        textStyle: TextStyles.defaultJokeStyle,
+                      ),
                     ],
                   ),
                 ),
